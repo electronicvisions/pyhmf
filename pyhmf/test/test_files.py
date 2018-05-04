@@ -23,16 +23,16 @@ class FileTest(object):
 
         conn_pyhmf = pyhmf.AllToAllConnector(weights=dist, delays=42)
         proj_pyhmf = pyhmf.Projection(
-                pyhmf.Population(size_a, pyhmf.IF_cond_alpha),
-                pyhmf.Population(size_b, pyhmf.IF_cond_alpha),
+                pyhmf.Population(size_a, pyhmf.IF_cond_exp),
+                pyhmf.Population(size_b, pyhmf.IF_cond_exp),
                 conn_pyhmf)
         
         proj_pyhmf.saveConnections(getattr(pyhmf, self.file_type)(path, 'w'))
 
         conn_pynn = pynn.FromFileConnector(getattr(pynn.recording.files, self.file_type)(path))
         proj_pynn = pynn.Projection(
-                pynn.Population(size_a, pynn.IF_cond_alpha),
-                pynn.Population(size_b, pynn.IF_cond_alpha),
+                pynn.Population(size_a, pynn.IF_cond_exp),
+                pynn.Population(size_b, pynn.IF_cond_exp),
                 conn_pynn)
 
         numpy.testing.assert_equal(proj_pyhmf.getWeights(format='array'), proj_pynn.getWeights(format='array'))

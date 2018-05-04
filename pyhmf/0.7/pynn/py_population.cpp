@@ -12,6 +12,7 @@
 #include "euter/exceptions.h"
 #include "euter/population.h"
 #include "euter/population_view.h"
+#include "pycellparameters/pyparameteraccess.h"
 
 // TODO remove after a reasonable amount of functions is implemented
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -32,19 +33,26 @@ size_t PyPopulation::euter_id() const
 }
 
 boost::shared_ptr<PopulationView> PyPopulation::createPopulation(
-        size_t size,
-        const bp::object& celltype,
-        boost::shared_ptr<Structure> const& structure,
-        const std::string& label)
+	size_t size,
+	const bp::object& celltype,
+	boost::shared_ptr<Structure> const& structure,
+	const std::string& label)
 {
-    if(!size)
-    {
-        throw std::runtime_error("number of neurons must be a positiv integer");
-    }
+	if(!size) {
+		throw std::runtime_error("number of neurons must be a positiv integer");
+	}
 
-    CellType t = resolveCellType(celltype);
-    PopulationPtr p  = Population::create(getStore(), size, t, structure, label);
-    return boost::make_shared<PopulationView>(p);
+	CellType t = resolveCellType(celltype);
+	PopulationPtr p  = Population::create(getStore(), size, t, structure, label);
+	auto ret = boost::make_shared<PopulationView>(p);
+
+	if(!ret->population().parameters().supported()) {
+		std::string err = "BrainScaleS does not support this celltype: ";
+		err += getCellTypeName(t);
+		throw std::runtime_error(err);
+	}
+
+	return ret;
 }
 
 namespace

@@ -132,8 +132,8 @@ class Projection(unittest.TestCase):
 class Regressions(unittest.TestCase):
 
     def test_CellTypeInitialization(self):
-        ts = [ 'EIF_cond_alpha_isfa_ista', 'EIF_cond_exp_isfa_ista',
-                'HH_cond_exp', 'IF_brainscales_hardware', 'IF_cond_alpha',
+        ts = [ 'EIF_cond_exp_isfa_ista', 'EIF_cond_exp_isfa_ista',
+                'HH_cond_exp', 'IF_brainscales_hardware', 'IF_cond_exp',
                 'IF_cond_exp', 'IF_cond_exp_gsfa_grr', 'IF_curr_alpha',
                 'IF_curr_exp', 'IF_facets_hardware1',
                 'SpikeSourceArray', 'SpikeSourceInhGamma', 'SpikeSourcePoisson']

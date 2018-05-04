@@ -65,8 +65,8 @@ class ConnectorTest(object):
 
         c_args['weights'] = weights
         
-        pre = backend.Population(size, backend.IF_cond_alpha)
-        post = backend.Population(size, backend.IF_cond_alpha)
+        pre = backend.Population(size, backend.IF_cond_exp)
+        post = backend.Population(size, backend.IF_cond_exp)
 
         connector = getattr(backend, self.connector)(**c_args)
         projection = backend.Projection(pre, post, connector, rng=backend.NativeRNG(seed))
@@ -300,8 +300,8 @@ class DistanceDependentProbabilityConnectorTest(unittest.TestCase):
             grid2d = backend.Grid2D(dx=1./numpy.sqrt(size),dy=1./numpy.sqrt(size))
         else:
             grid2d = backend.space.Grid2D(dx=1./numpy.sqrt(size),dy=1./numpy.sqrt(size))
-        pre = backend.Population(size, backend.IF_cond_alpha, structure=grid2d)
-        post = backend.Population(size, backend.IF_cond_alpha, structure=grid2d)
+        pre = backend.Population(size, backend.IF_cond_exp, structure=grid2d)
+        post = backend.Population(size, backend.IF_cond_exp, structure=grid2d)
 
         conn_args['space'] = backend.Space('xy')
 

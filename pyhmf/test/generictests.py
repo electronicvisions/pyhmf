@@ -338,7 +338,7 @@ class PopulationIndexTest(unittest.TestCase):
         self.net2 = sim.Population((2,4,3), sim.IF_curr_exp)
         self.net3 = sim.Population((2,2,1), sim.SpikeSourceArray)
         self.net4 = sim.Population((1,2,1), sim.SpikeSourceArray)
-        self.net5 = sim.Population((3,3), sim.IF_cond_alpha)
+        self.net5 = sim.Population((3,3), sim.IF_cond_exp)
     
     def testValidIndices(self):
         for i in range(10):
@@ -361,7 +361,7 @@ class PopulationIteratorTest(unittest.TestCase):
         self.net2 = sim.Population((2,4,3), sim.IF_curr_exp)
         self.net3 = sim.Population((2,2,1), sim.SpikeSourceArray)
         self.net4 = sim.Population((1,2,1), sim.SpikeSourceArray)
-        self.net5 = sim.Population((3,3), sim.IF_cond_alpha)
+        self.net5 = sim.Population((3,3), sim.IF_cond_exp)
         
     def testIter(self):
         """This needs more thought for the distributed case."""
@@ -534,8 +534,8 @@ class PopulationRecordTest(unittest.TestCase):
         sim.setup()
         self.pop1 = sim.Population((3,3), sim.SpikeSourcePoisson,{'rate': 20})
         self.pop2 = sim.Population((3,3), sim.IF_curr_alpha)
-        self.pop3 = sim.Population((3,3), sim.IF_cond_alpha)
-        #self.pop4 = sim.Population((3,3), sim.EIF_cond_alpha_isfa_ista)
+        self.pop3 = sim.Population((3,3), sim.IF_cond_exp)
+        #self.pop4 = sim.Population((3,3), sim.EIF_cond_exp_isfa_ista)
         self.pops = [self.pop1, self.pop2, self.pop3]
 
     def tearDown(self):

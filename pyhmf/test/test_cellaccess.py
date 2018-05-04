@@ -15,7 +15,7 @@ class IterationTest(unittest.TestCase):
 
         size = random.randint(1, 1000)
         text = '%ds till the end' % size
-        celltype = pyhmf.IF_brainscales_hardware
+        celltype = pyhmf.IF_cond_exp
         pop = pyhmf.Population(size, celltype, label=text)
 
         self.assertEqual(size, len(list(pop.__iter__())))
@@ -30,7 +30,7 @@ class IterationTest(unittest.TestCase):
 
         size = random.randint(1, 1000)
         text = '%ds till the end' % size
-        celltype = pyhmf.IF_brainscales_hardware
+        celltype = pyhmf.IF_cond_exp
         selector = numpy.array([ random.choice([True, False]) for x in range(0, size) ])
         pop = pyhmf.Population(size, celltype, label=text)
         pv = pyhmf.PopulationView(pop, selector)
@@ -55,9 +55,9 @@ class IterationTest(unittest.TestCase):
         size_a = random.randint(1, 1000)
         size_b = random.randint(1, 1000)
 
-        pop_a = pyhmf.Population(size_a, pyhmf.IF_brainscales_hardware)
-        pop_b = pyhmf.Population(size_b, pyhmf.IF_brainscales_hardware)
-        pop_c = pyhmf.Population(1, pyhmf.IF_brainscales_hardware)
+        pop_a = pyhmf.Population(size_a, pyhmf.IF_cond_exp)
+        pop_b = pyhmf.Population(size_b, pyhmf.IF_cond_exp)
+        pop_c = pyhmf.Population(1, pyhmf.IF_cond_exp)
 
         view = pop_b[0:random.randint(1, size_b)]
 
@@ -87,8 +87,8 @@ class IterationTest(unittest.TestCase):
         size_a = random.randint(1, 1000)
         size_b = random.randint(1, 1000)
 
-        pop_a = pyhmf.Population(size_a, pyhmf.IF_brainscales_hardware)
-        pop_b = pyhmf.Population(size_b, pyhmf.IF_brainscales_hardware)
+        pop_a = pyhmf.Population(size_a, pyhmf.IF_cond_exp)
+        pop_b = pyhmf.Population(size_b, pyhmf.IF_cond_exp)
 
         pro = pyhmf.Projection(pop_a, pop_b, pyhmf.AllToAllConnector())
 
