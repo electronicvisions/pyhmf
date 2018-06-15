@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+import os
+import subprocess
+
+from waflib.extras import symwaf2ic
+from waflib.extras.gtest import summary
+
+
+def depends(ctx):
+    ctx('ester')
+    ctx('pyplusplus')
+    ctx('pygccxml')
+    ctx('pyublas')
+    ctx('euter')
+    ctx('euter', 'pycellparameters')
+    ctx('ztl')
+
+def options(opt):
+    opt.load('compiler_cxx')
+    opt.load('gtest')
+    opt.load('python')
+    opt.load('pypp')
+    opt.load('boost')
+
+    opt.add_option('--pynn-api-level', action='store', default='0.7', help='Define PyNN-API-level')
+
+
+def configure(cfg):
+    cfg.check_waf_version(mini='1.6.10') # ECM: bleeding EDGE!!1!
+
+    cfg.load('compiler_cxx')
+    cfg.load('gtest')
+    cfg.load('pypp')
+    cfg.load('boost')
+    cfg.load('python')
+
+    cfg.check_python_version(minver=(2,5))
+    cfg.check_python_headers()
+    cfg.env['DEFINES_PYEMBED'] = filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEMBED'])
+    cfg.env['DEFINES_PYEXT'] = filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEXT'])
+
+    cfg.check_boost(lib='python', uselib_store='BOOST4PYHMF')
+    boost_version = map(int, cfg.env.BOOST_VERSION.split('_'))
+    if boost_version < [1,49]:
+        cfg.fatal("have boost %s need boost >= 1.49 due to variadic preprocessor stuff" % '.'.join(cfg.env.BOOST_VERSION.split('_')))
+    elif boost_version > [1,63]:
+        cfg.check_boost(lib='numpy', uselib_store='BOOST4PYHMF')
+
+
+    # check for PyNN API level
+    cfg.env.PYNN_API_LEVEL = cfg.options.pynn_api_level
+    assert cfg.env.PYNN_API_LEVEL in ['0.7', '0.8']
+
+
+def build(bld):
+    PYNN_API_LEVEL = bld.env.PYNN_API_LEVEL
+
+    old_path = os.getcwd()
+    os.chdir(str(bld.path))
+    version = subprocess.Popen('git rev-parse --short HEAD'.split(' '), stdout=subprocess.PIPE).communicate()[0]
+    os.chdir(old_path)
+
+    flags = { "cxxflags"  : ['-DVERSION={0}'.format(version)],
+    }
+
+    
+    libpyhmf_src = bld.path.ant_glob('*.cpp') + bld.path.ant_glob(PYNN_API_LEVEL + '/pynn/*.cpp')
+
+    bld(target = 'pyhmf_inc',
+        export_includes = ['..', PYNN_API_LEVEL],
+        use = ['pyublas_inc'],
+   )
+
+    bld(target          = 'pyhmf_impl',
+        features        = 'cxx cxxshlib',
+        use             = [
+            'pyublas', 'euter', 'ester-submit', 'ester_inc',
+            'cellparameters_access', 'BOOST4PYHMF', 'LOG4CXX', 'pyhmf_inc', 'ZTL'
+        ],
+        source          = libpyhmf_src,
+        install_path    = 'lib',
+        **flags)
+
+    bld(target          = 'pyhmf',
+        features        = 'cxx cxxshlib pypp pyext pyembed post_task',
+        script          = 'bindings/generate.py',
+        gen_defines     = ['PYPLUSPLUS', '__STRICT_ANSI__'],
+        headers         = 'bindings.h',
+        use             = [
+            'pyhmf_inc', 'pyhmf_impl', 'pyublas', 'pywrapstdvector', 'pycellparameters'],
+        install_path    = 'lib',
+        post_task       = ['pyester', 'pyhmf_python_tests'],
+        **flags)
+
+    bld(target          = 'pyhmf_testing',
+        features        = 'cxx cxxshlib pypp pyext pyembed',
+        script          = 'bindings/generate_testing.py',
+        gen_defines     = ['PYPLUSPLUS', '__STRICT_ANSI__'],
+        headers         = PYNN_API_LEVEL + '/pynn/testing.h',
+        use             = ['pyhmf', 'pyhmf_impl'],
+        install_path    = 'lib',
+        **flags)
+
+    bld(target          = 'pyhmf_python_tests',
+        features        = 'pytest',
+        tests           = bld.path.ant_glob('test/test_*.py', excl=[
+            'test/test_connectors.py', # crashing due to nest?
+        ]),
+        pythonpath      = '.',
+        use             = ['pyhmf', 'pyhmf_testing', 'pyublas'],
+        install_path    = os.path.join('bin', 'tests'),
+        test_timeout    = 180, # ECM: empirical data :)
+    )
+    bld.add_post_fun(summary)

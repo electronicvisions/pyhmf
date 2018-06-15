@@ -1,0 +1,35 @@
+!*.cpp
+!*.h
+
+# waf stuff
+build*
+html
+latex
+.lock-waf*
+.waf-*/
+waf*
+
+# py++ stuff
+/bindings/generated
+
+*.pyc
+*.o
+*.so
+
+# install dirs
+bin/
+lib/
+
+# ctags
+tags
+
+# compiler stuff
+/core
+
+# auto generated source
+rcf/1.3/include/RCF/protobuf/RcfMessages.pb.cc
+rcf/1.3/include/RCF/protobuf/RcfMessages.pb.h
+/nbproject/private/
+
+# Weird test output (?)
+test.file

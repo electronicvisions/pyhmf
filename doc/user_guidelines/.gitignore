@@ -1,0 +1,20 @@
+# default .gitignore file
+
+*.aux
+*.bbl
+*.log
+*.blg
+/*.pdf
+*.pdf.mk
+*.idx
+*.ilg
+*.ind
+*.nlo
+*.out
+*.toc
+*.pyc
+
+# waf stuff
+/build*
+/.lock-waf*
+/.waf-*

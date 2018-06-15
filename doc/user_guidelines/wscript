@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+# encoding: utf-8
+import os
+
+top='.'
+name='main'
+
+def configure(context):
+    context.check_tool('tex')
+    context.env['PDFLATEX'] = 'lualatex'
+
+def build(context):
+    main = context(
+            name     = name,
+            features = 'tex',
+            source   = ['%s.tex'%name, ],
+            type     = 'pdflatex',      # or 'latex'
+            outs     = 'pdf',           # 'pdf ps'
+            prompt   = True,               # 0 conceals debug output, else 1
+        )
+
+    # link is created only during install
+    context.symlink_as(
+            './%s.pdf'%name,
+            context.path.find_or_declare('%s.pdf'%name).abspath()
+        )
