@@ -5,9 +5,22 @@ import os, sys, random, unittest, xmlrunner
 import pyhmf as pynn
 
 
+def pymarocco_available():
+    try:
+        import pymarocco
+    except ImportError:
+        return False
+    return True
+
+@unittest.skipIf(not pymarocco_available(), "Test requires pymarocco")
 class Assembly(unittest.TestCase):
     def test_Constructor(self):
-        pynn.setup()
+        import pymarocco
+
+        marocco = pymarocco.PyMarocco()
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+
+        pynn.setup(marocco=marocco)
 
         NPOP = 100
         popus = [pynn.Population(random.randint(10,100), pynn.IF_cond_exp) for x in range(0,NPOP)]
@@ -20,8 +33,12 @@ class Assembly(unittest.TestCase):
 
 
     def test_Addition(self):
+        import pymarocco
 
-        pynn.setup()
+        marocco = pymarocco.PyMarocco()
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+
+        pynn.setup(marocco=marocco)
 
         p1 = pynn.Population(100, pynn.IF_cond_exp)
         p2 = pynn.Population(100, pynn.IF_cond_exp)
@@ -33,11 +50,17 @@ class Assembly(unittest.TestCase):
         pynn.run(1000)
 
 
+@unittest.skipIf(not pymarocco_available(), "Test requires pymarocco")
 class PopulationView(unittest.TestCase):
 
     def test_Constructor(self):
         import numpy
-        pynn.setup()
+        import pymarocco
+
+        marocco = pymarocco.PyMarocco()
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+
+        pynn.setup(marocco=marocco)
 
         N=10
         model = pynn.IF_cond_exp
@@ -83,12 +106,17 @@ class Connector(unittest.TestCase):
         pynn.setup()
         conn = pynn.OneToOneConnector(weights=0.01, delays=1.0)
 
-
+@unittest.skipIf(not pymarocco_available(), "Test requires pymarocco")
 class Projection(unittest.TestCase):
 
     def test_FromListConnector(self):
         import numpy
-        pynn.setup()
+        import pymarocco
+
+        marocco = pymarocco.PyMarocco()
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+
+        pynn.setup(marocco=marocco)
 
         N=10
         model = pynn.IF_cond_exp

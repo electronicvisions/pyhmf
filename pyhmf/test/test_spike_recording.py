@@ -16,6 +16,12 @@ def ESS_available():
         import pymarocco
         marocco = pymarocco.PyMarocco()
         marocco.backend = pymarocco.PyMarocco.ESS
+        marocco.neuron_placement.skip_hicanns_without_neuron_blacklisting(False)
+        marocco.continue_despite_synapse_loss = True
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+        marocco.defects.backend = pymarocco.Defects.Backend.None
+        marocco.hicann_configurator = pymarocco.PyMarocco.HICANNConfigurator
+
         pynn.setup(marocco=marocco)
         pynn.run(1.)
         return True
@@ -38,6 +44,11 @@ class TestSpikeRecording(unittest.TestCase):
         marocco = pymarocco.PyMarocco()
         marocco.backend = pymarocco.PyMarocco.ESS
         marocco.experiment_time_offset = 5.e-7
+        marocco.neuron_placement.skip_hicanns_without_neuron_blacklisting(False)
+        marocco.continue_despite_synapse_loss = True
+        marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
+        marocco.defects.backend = pymarocco.Defects.Backend.None
+        marocco.hicann_configurator = pymarocco.PyMarocco.HICANNConfigurator
 
         setup_params = dict()
         if  pynn.__name__ == "pyhmf":
@@ -91,3 +102,6 @@ class TestSpikeRecording(unittest.TestCase):
         # when sorted, ids should be: range(10,20) + range(5)
         s_a = s_a[np.argsort(s_a[:,1])] # sort by time
         self.assertTrue( np.array_equal(range(10,20)+range(5), s_a[:,0]) )
+
+if __name__ == '__main__':
+    unittest.main()
