@@ -2,7 +2,6 @@
 # -*- coding: utf8 -*-
 import numpy as np
 import pyhmf as pynn
-import pysthal
 import unittest
 
 def pymarocco_available():
@@ -21,7 +20,7 @@ def ESS_available():
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
         marocco.defects.backend = pymarocco.Defects.Backend.None
-        marocco.hicann_configurator = pysthal.HICANNConfigurator()
+        marocco.hicann_configurator = pymarocco.PyMarocco.HICANNConfigurator
 
         pynn.setup(marocco=marocco)
         pynn.run(1.)
@@ -49,7 +48,7 @@ class TestSpikeRecording(unittest.TestCase):
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
         marocco.defects.backend = pymarocco.Defects.Backend.None
-        marocco.hicann_configurator = pysthal.HICANNConfigurator()
+        marocco.hicann_configurator = pymarocco.PyMarocco.HICANNConfigurator
 
         setup_params = dict()
         if  pynn.__name__ == "pyhmf":
