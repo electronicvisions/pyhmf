@@ -63,7 +63,7 @@ PyProjectionPtr PyProjection::create(
 		auto p = boost::make_shared<PyProjection>();
 		p->_impl = Projection::create(getStore(), pre._get(), post._get(), c->_getImpl(), rng._getRNG(), s, t, tmp_synapse_dynamics);
 		return p;
-	} catch(InvalidDimensions exc) {
+	} catch(InvalidDimensions const& exc) {
 		throw PyInvalidDimensionsError(exc.what());
 	}
 }
