@@ -43,7 +43,7 @@ PyProjectionPtr PyProjection::create(
 	std::string s,
 	std::string t,
 	bp::object synapse_dynamics,
-	std::string /* label */,
+	std::string l,
 	const PyAbstractRNG & rng)
 {
 	boost::shared_ptr<SynapseDynamics> tmp_synapse_dynamics;
@@ -61,7 +61,7 @@ PyProjectionPtr PyProjection::create(
 
 	try {
 		auto p = boost::make_shared<PyProjection>();
-		p->_impl = Projection::create(getStore(), pre._get(), post._get(), c->_getImpl(), rng._getRNG(), s, t, tmp_synapse_dynamics);
+		p->_impl = Projection::create(getStore(), pre._get(), post._get(), c->_getImpl(), rng._getRNG(), s, t, tmp_synapse_dynamics, l);
 		return p;
 	} catch(InvalidDimensions const& exc) {
 		throw PyInvalidDimensionsError(exc.what());
