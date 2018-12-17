@@ -6,9 +6,12 @@
 
 template<typename ParentType>
 class CellIterator;
+class PyPopulationBase;
+
+namespace euter {
 class Assembly;
 class PopulationView;
-class PyPopulationBase;
+}
 
 class PyAssembly : public PyAssemblyBase
 {
@@ -61,17 +64,17 @@ public:
 	/// the given label. If no such PyPopulation exists, raise KeyError.
 	bp::object get_population(std::string label) const;
 
-	Assembly & _get();
-	const Assembly & _get() const;
+	euter::Assembly & _get();
+	const euter::Assembly & _get() const;
 
-	boost::shared_ptr<Assembly> _impl;
-	
+	boost::shared_ptr<euter::Assembly> _impl;
+
 	bool operator==(const PyAssembly& right) const;
-	
-	PyAssembly(const boost::shared_ptr<Assembly> & p);
+
+	PyAssembly(const boost::shared_ptr<euter::Assembly> & p);
 private:
-	virtual void apply(std::function<void(PopulationView &)> f);
-	virtual void apply(std::function<void(PopulationView const&)> f) const;
+	virtual void apply(std::function<void(euter::PopulationView &)> f);
+	virtual void apply(std::function<void(euter::PopulationView const&)> f) const;
 
 	friend std::ostream & operator<<(std::ostream & out, const PyAssembly & p);
 };

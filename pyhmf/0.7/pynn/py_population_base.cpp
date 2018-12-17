@@ -15,7 +15,7 @@ PyPopulationBase::PyPopulationBase()
 {
 }
 
-PyPopulationBase::PyPopulationBase(const boost::shared_ptr<PopulationView> & impl) :
+PyPopulationBase::PyPopulationBase(const boost::shared_ptr<euter::PopulationView> & impl) :
     _impl(impl)
 {
 }
@@ -45,12 +45,12 @@ bp::object const PyPopulationBase::celltype() const
 	return resolveCellType(_impl->population().type());
 }
 
-void PyPopulationBase::apply(std::function<void(PopulationView &)> f)
+void PyPopulationBase::apply(std::function<void(euter::PopulationView &)> f)
 {
 	f(*_impl);
 }
 
-void PyPopulationBase::apply(std::function<void(PopulationView const&)> f) const
+void PyPopulationBase::apply(std::function<void(euter::PopulationView const&)> f) const
 {
 	f(*_impl);
 }
@@ -108,18 +108,18 @@ void PyPopulationBase::rset(std::string parameter_name, PyRandomDistribution ran
 	auto dist = rand_distr._getDist();
 
 	const std::vector<ParameterProxy> & proxy = getPyParameterVector(*_impl);
-	if(dist->type() == RandomDistribution::INT)
+	if(dist->type() == euter::RandomDistribution::INT)
 	{
-		std::vector<distribution_int_t> values(proxy.size());
+		std::vector<euter::distribution_int_t> values(proxy.size());
 		dist->next(values);
 		for(size_t ii = 0; ii < proxy.size(); ++ii)
 		{
 		proxy[ii].set(parameter_name, bp::object(values[ii]));
 		}
 	}
-	else if (dist->type() == RandomDistribution::REAL)
+	else if (dist->type() == euter::RandomDistribution::REAL)
 	{
-		std::vector<distribution_float_t> values(proxy.size());
+		std::vector<euter::distribution_float_t> values(proxy.size());
 		dist->next(values);
 		for(size_t ii = 0; ii < proxy.size(); ++ii)
 		{

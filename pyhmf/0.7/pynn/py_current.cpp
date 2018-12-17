@@ -11,6 +11,8 @@
 #include <map>
 #include <boost/make_shared.hpp>
 
+using namespace euter;
+
 ublas::vector<double> extractVector(const bp::object obj)
 {
 	ublas::vector<double> vec;

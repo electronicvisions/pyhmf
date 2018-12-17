@@ -133,7 +133,7 @@ const char* PyNonExistentParameterError::name() const throw()
 }
 
 // RecordingError is a more complex exception, too.
-PyRecordingError::PyRecordingError(std::string variable, CellType cell_type) : PyHMFException("")
+PyRecordingError::PyRecordingError(std::string variable, euter::CellType cell_type) : PyHMFException("")
 {
     this->variable = variable;
     this->cell_type = cell_type;

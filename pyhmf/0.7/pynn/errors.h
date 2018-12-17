@@ -104,7 +104,7 @@ class PyRecordingError: public PyHMFException
 {
 public:
 #ifndef PYPLUSPLUS
-    PyRecordingError(std::string variable, CellType cell_type);
+    PyRecordingError(std::string variable, euter::CellType cell_type);
 #endif
     PyRecordingError();
     ~PyRecordingError() throw();
@@ -113,6 +113,6 @@ public:
 private:
     std::string variable;
 #ifndef PYPLUSPLUS
-    CellType cell_type;
+    euter::CellType cell_type;
 #endif
 };

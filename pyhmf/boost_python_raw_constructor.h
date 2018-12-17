@@ -4,6 +4,8 @@
 #include <boost/python/raw_function.hpp>
 #include <boost/python/detail/api_placeholder.hpp>
 
+using namespace euter;
+
 namespace boost { namespace python {
 
 namespace detail {

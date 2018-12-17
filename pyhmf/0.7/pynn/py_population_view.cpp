@@ -14,6 +14,8 @@
 #include "euter/population.h"
 #include "euter/population_view.h"
 
+using namespace euter;
+
 PyPopulationView::~PyPopulationView()
 {
 

@@ -25,9 +25,9 @@
 // Expands to (for elm being IF_brainscales_hardware):
 // (CellType::IF_brainscales_hardware, bp::scope().attr("IF_brainscales_hardware"))
 #define BUILD_RELATION(r, _, elm) \
-    (CellType::elm, bp::scope().attr(BOOST_PP_STRINGIZE(elm)))
+    (euter::CellType::elm, bp::scope().attr(BOOST_PP_STRINGIZE(elm)))
 
-typedef boost::bimap<CellType, bp::object> ct_map_t;
+typedef boost::bimap<euter::CellType, bp::object> ct_map_t;
 const ct_map_t celltypeMap;
 
 // Shame on me... TODO CK place later in a better position
@@ -101,37 +101,37 @@ void _loadPyNNCellTypes()
         ;
 }
 
-bp::object resolveCellType(CellType celltype)
+bp::object resolveCellType(euter::CellType celltype)
 {
 	if(celltypeMap.right.empty())
 	{
-		InvalidParameter("No Neuron Types registered :(");
+		euter::InvalidParameter("No Neuron Types registered :(");
 	}
 
 	auto it = celltypeMap.left.find(celltype);
 	if(it == celltypeMap.left.end())
 	{
-		InvalidParameter("Invalid/Unkown Neuron Type");
+		euter::InvalidParameter("Invalid/Unkown Neuron Type");
 	}
 	return it->second;
 }
 
-CellType resolveCellType(bp::object obj)
+euter::CellType resolveCellType(bp::object obj)
 {
 	if(obj.is_none())
 	{
-		InvalidParameter("None Neuron Type");
+		euter::InvalidParameter("None Neuron Type");
 	}
 
 	if(celltypeMap.right.empty())
 	{
-		InvalidParameter("No Neuron Types registered :(");
+		euter::InvalidParameter("No Neuron Types registered :(");
 	}
 	
 	auto it = celltypeMap.right.find(obj);
 	if(it == celltypeMap.right.end())
 	{
-		InvalidParameter("Invalid/Unkown Neuron Type");
+		euter::InvalidParameter("Invalid/Unkown Neuron Type");
 	}
 	return it->second;
 }

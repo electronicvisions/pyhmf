@@ -10,6 +10,8 @@
 #include "euter/metadata.h"
 #include "submit.h"
 
+using namespace euter;
+
 double get_time_step() {
     return getStore().getTimestep();
 }

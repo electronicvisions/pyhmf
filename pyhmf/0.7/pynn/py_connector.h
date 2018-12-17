@@ -8,6 +8,7 @@
 
 #include "py_random.h"
 
+namespace euter {
 class Connector;
 class AllToAllConnector;
 class OneToOneConnector;
@@ -16,6 +17,7 @@ class FixedNumberPreConnector;
 class FixedNumberPostConnector;
 class DistanceDependentProbabilityConnector;
 class FromListConnector;
+}
 
 struct PyConnector : public SentinelKeeper
 {
@@ -24,12 +26,12 @@ struct PyConnector : public SentinelKeeper
 	typedef py_matrix_type matrix_type;
 	typedef PyRandomDistribution rng_type;
 
-	virtual boost::shared_ptr<Connector> _getImpl() = 0;
+	virtual boost::shared_ptr<euter::Connector> _getImpl() = 0;
 };
 
 class PyAllToAllConnector : public PyConnector {
 public:
-	PyAllToAllConnector(boost::shared_ptr<AllToAllConnector>);
+	PyAllToAllConnector(boost::shared_ptr<euter::AllToAllConnector>);
 	static boost::shared_ptr<PyAllToAllConnector>
 	create(
 		bool       const allow_self_connections = true,
@@ -37,15 +39,15 @@ public:
 		bp::object const delays  = emptyPyObject
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<AllToAllConnector> impl;
+	boost::shared_ptr<euter::AllToAllConnector> impl;
 };
 
 
 class PyOneToOneConnector : public PyConnector {
 public:
-	PyOneToOneConnector(boost::shared_ptr<OneToOneConnector>);
+	PyOneToOneConnector(boost::shared_ptr<euter::OneToOneConnector>);
 	static boost::shared_ptr<PyOneToOneConnector>
 	create(
 		bool       const allow_self_connections = true,
@@ -53,15 +55,15 @@ public:
 		bp::object const delays  = emptyPyObject
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<OneToOneConnector> impl;
+	boost::shared_ptr<euter::OneToOneConnector> impl;
 };
 
 
 class PyFixedProbabilityConnector : public PyConnector {
 public:
-	PyFixedProbabilityConnector(boost::shared_ptr<FixedProbabilityConnector>);
+	PyFixedProbabilityConnector(boost::shared_ptr<euter::FixedProbabilityConnector>);
 	static boost::shared_ptr<PyFixedProbabilityConnector>
 	create(
 		double     const p_connect,
@@ -70,14 +72,14 @@ public:
 		bp::object const delays  = emptyPyObject
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<FixedProbabilityConnector> impl;
+	boost::shared_ptr<euter::FixedProbabilityConnector> impl;
 };
 
 class PyFixedNumberPreConnector : public PyConnector {
 public:
-	PyFixedNumberPreConnector(boost::shared_ptr<FixedNumberPreConnector>);
+	PyFixedNumberPreConnector(boost::shared_ptr<euter::FixedNumberPreConnector>);
 	static boost::shared_ptr<PyFixedNumberPreConnector>
 	create(
 		size_t     const n,
@@ -86,14 +88,14 @@ public:
 		bp::object const delays  = emptyPyObject
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<FixedNumberPreConnector> impl;
+	boost::shared_ptr<euter::FixedNumberPreConnector> impl;
 };
 
 class PyFixedNumberPostConnector : public PyConnector {
 public:
-	PyFixedNumberPostConnector(boost::shared_ptr<FixedNumberPostConnector>);
+	PyFixedNumberPostConnector(boost::shared_ptr<euter::FixedNumberPostConnector>);
 	static boost::shared_ptr<PyFixedNumberPostConnector>
 	create(
 		size_t     const n,
@@ -102,16 +104,16 @@ public:
 		bp::object const delays  = emptyPyObject
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<FixedNumberPostConnector> impl;
+	boost::shared_ptr<euter::FixedNumberPostConnector> impl;
 };
 
 class ExpressionBasedProbabilityGenerator;
 
 class PyDistanceDependentProbabilityConnector : public PyConnector {
 public:
-	PyDistanceDependentProbabilityConnector(boost::shared_ptr<DistanceDependentProbabilityConnector>);
+	PyDistanceDependentProbabilityConnector(boost::shared_ptr<euter::DistanceDependentProbabilityConnector>);
 	static boost::shared_ptr<PyDistanceDependentProbabilityConnector>
 	create(
 		bp::str    const d_expression,
@@ -124,17 +126,17 @@ public:
 		int        const n_connections = -1
 	);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<DistanceDependentProbabilityConnector> impl;
+	boost::shared_ptr<euter::DistanceDependentProbabilityConnector> impl;
 };
 
 class PyFromListConnector : public PyConnector {
 public:
-	PyFromListConnector(boost::shared_ptr<FromListConnector>);
+	PyFromListConnector(boost::shared_ptr<euter::FromListConnector>);
 	static boost::shared_ptr<PyFromListConnector> create(bp::object conn_list);
 
-	virtual boost::shared_ptr<Connector> _getImpl();
+	virtual boost::shared_ptr<euter::Connector> _getImpl();
 
-	boost::shared_ptr<FromListConnector> impl;
+	boost::shared_ptr<euter::FromListConnector> impl;
 };

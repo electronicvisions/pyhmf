@@ -4,7 +4,9 @@
 #include "py_models.h"
 #include "py_space.h"
 
+namespace euter {
 class Population;
+}
 
 /// The PyNN 0.7 population API as C++ code ...
 class PyPopulation : public PyPopulationBase
@@ -48,14 +50,14 @@ public:
 
 	CellIterator<PyPopulationBase> begin();
 	CellIterator<PyPopulationBase> end();
-	
-	PopulationView const& _get() const;
+
+	euter::PopulationView const& _get() const;
 
 private:
-	static boost::shared_ptr<PopulationView> createPopulation(
+	static boost::shared_ptr<euter::PopulationView> createPopulation(
 	        size_t size,
 	        const bp::object& cellclass,
-	        boost::shared_ptr<Structure> const& structure,
+	        boost::shared_ptr<euter::Structure> const& structure,
 	        const std::string& label);
 };
 

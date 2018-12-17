@@ -14,6 +14,7 @@
 #include "euter/exceptions.h"
 #include "pyhmf/boost_python.h"
 
+using namespace euter;
 
 Assembly & PyAssembly::_get()
 {

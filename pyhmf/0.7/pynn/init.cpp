@@ -7,6 +7,8 @@
 
 #include <log4cxx/basicconfigurator.h>
 
+using namespace euter;
+
 // Expands to (for elm being IF_brainscales_hardware):
 // bp::scope().attr("IF_brainscales_hardware") = pynnCelltypes.attr("IF_brainscales_hardware");
 // bp::object(bp::scope().attr("IF_brainscales_hardware")).attr("__module__") = "pyhmf";

@@ -15,6 +15,8 @@
 #include "ztl/pack/pack.h"
 #include "ztl/pack/get.h"
 
+using namespace euter;
+
 PyAbstractRNG::~PyAbstractRNG() {}
 
 boost::shared_ptr<RandomDistribution>

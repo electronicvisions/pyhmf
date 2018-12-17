@@ -5,6 +5,8 @@
 
 #include <boost/numeric/ublas/io.hpp>
 
+using namespace euter;
+
 PySpace::PySpace(
 		std::string axes,
 		double scale_factor,

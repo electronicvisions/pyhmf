@@ -1,5 +1,7 @@
 #include "pyhmf/objectstore.h"
 
+using namespace euter;
+
 namespace {
 ObjectStore store;
 }

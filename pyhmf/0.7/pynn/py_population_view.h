@@ -50,5 +50,5 @@ public:
 	CellIterator<PyPopulationBase> begin();
 	CellIterator<PyPopulationBase> end();
 
-	PyPopulationView(const boost::shared_ptr<PopulationView>& impl);
+	PyPopulationView(const boost::shared_ptr<euter::PopulationView>& impl);
 };

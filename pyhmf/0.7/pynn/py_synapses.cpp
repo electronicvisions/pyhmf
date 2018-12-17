@@ -7,6 +7,8 @@
 
 #include <string>
 
+using namespace euter;
+
 #define IMPLEMENT_WRAPPER(EUTER_CLASS)                                          \
 Py##EUTER_CLASS* Py##EUTER_CLASS::_raw_constructor(bp::tuple, bp::dict kwargs)  \
 {                                                                               \

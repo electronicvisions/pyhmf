@@ -3,4 +3,4 @@
 #include "euter/objectstore.h"
 
 void resetStore();
-ObjectStore& getStore();
+euter::ObjectStore& getStore();

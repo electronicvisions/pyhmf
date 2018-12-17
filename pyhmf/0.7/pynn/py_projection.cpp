@@ -19,6 +19,8 @@
 
 #include <boost/numeric/ublas/matrix.hpp>
 
+using namespace euter;
+
 /// presynaptic_neurons and postsynaptic_neurons - Population, PopulationView
 /// or Assembly objects.
 /// source - string specifying which attribute of the presynaptic cell

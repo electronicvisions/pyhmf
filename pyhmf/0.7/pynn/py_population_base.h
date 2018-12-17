@@ -95,20 +95,20 @@ public:
 	void tset(std::string const& parameter_name, npyarray const& value_array);
 	void tset(std::string const& parameter_name, bp::object const& value_array);
 
-	boost::shared_ptr<PopulationView> _impl;
+	boost::shared_ptr<euter::PopulationView> _impl;
 
 	friend class PyPopulationView;
 
 	size_t euter_id() const;
 
 protected:
-	PyPopulationBase(const boost::shared_ptr<PopulationView> & impl);
+	PyPopulationBase(const boost::shared_ptr<euter::PopulationView> & impl);
 
 	// default ctor needed in PyPopulationView
 	PyPopulationBase();
 
-	void apply(std::function<void(PopulationView &)> f);
-	void apply(std::function<void(PopulationView const&)> f) const;
+	void apply(std::function<void(euter::PopulationView &)> f);
+	void apply(std::function<void(euter::PopulationView const&)> f) const;
 
 	friend std::ostream & operator<<(std::ostream & out, const PyPopulationBase & p);
 };

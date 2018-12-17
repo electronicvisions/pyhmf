@@ -21,7 +21,7 @@ void numpyExample(py_vector_type o) {
 
 size_t getObjectStoreSize()
 {
-	ObjectStore& os = getStore();
+	euter::ObjectStore& os = getStore();
 	std::stringstream store;
 	boost::archive::binary_oarchive oa(store);
 	oa << os;
@@ -75,6 +75,6 @@ void test_NotLocalError()
 
 void test_RecordingError()
 {
-    throw PyRecordingError("foobar", CellType(0));
+    throw PyRecordingError("foobar", euter::CellType(0));
 }
 }

@@ -2,7 +2,9 @@
 
 #include "pyhmf/boost_python_fwd.h"
 
+namespace euter {
 class CurrentSource;
+}
 
 class PyPopulationBase;
 class PyAssembly;
@@ -10,13 +12,13 @@ class PyAssembly;
 class PyCurrentSource
 {
 public:
-	PyCurrentSource(boost::shared_ptr<CurrentSource> impl);
+	PyCurrentSource(boost::shared_ptr<euter::CurrentSource> impl);
 	virtual ~PyCurrentSource() {}
 	void inject_into(const PyAssembly& target);
 	void inject_into(const PyID& cell);
 	void inject_into(const bp::list& cells);
 protected:
-	boost::shared_ptr<CurrentSource> _impl;
+	boost::shared_ptr<euter::CurrentSource> _impl;
 };
 
 class PyDCSource : public PyCurrentSource

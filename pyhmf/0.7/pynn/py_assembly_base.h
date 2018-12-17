@@ -16,7 +16,10 @@ class PyID;
 class PyPopulation;
 class PyPopulationView;
 class PyAssembly;
+
+namespace euter {
 class PopulationView;
+}
 
 typedef bp::object Parameter;
 typedef std::map<std::string, Parameter> ParameterDict;
@@ -138,8 +141,8 @@ public:
 	void save_positions(path const& file);
 
 protected:
-	virtual void apply(std::function<void(PopulationView &)> f) = 0;
-	virtual void apply(std::function<void(PopulationView const&)> f) const = 0;
+	virtual void apply(std::function<void(euter::PopulationView &)> f) = 0;
+	virtual void apply(std::function<void(euter::PopulationView const&)> f) const = 0;
 
 private:
 	void set_record(std::string parameter_name, bool value);

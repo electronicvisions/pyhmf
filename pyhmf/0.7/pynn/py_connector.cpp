@@ -16,6 +16,8 @@
 #include "euter/distancedependentprobabilityconnector.h"
 #include "euter/fromlistconnector.h"
 
+using namespace euter;
+
 namespace
 {
 

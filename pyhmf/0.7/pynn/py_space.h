@@ -6,7 +6,9 @@
 #include <Python.h>
 #include "euter/space.h"
 
+namespace euter {
 class Structure;
+}
 
 class PySpace
 {
@@ -19,7 +21,7 @@ public:
 		   );
 	py_matrix_type distances(py_vector_type A, py_vector_type B, bool expand=false);
 
-	boost::shared_ptr<Space> _impl;
+	boost::shared_ptr<euter::Space> _impl;
 };
 
 class PyStructure
@@ -28,7 +30,7 @@ public:
 	virtual ~PyStructure() = 0;
     py_vector_type generate_positions(size_t n);
 
-    boost::shared_ptr<Structure> _impl;
+    boost::shared_ptr<euter::Structure> _impl;
 };
 
 class PyLine : public PyStructure
@@ -77,7 +79,7 @@ public:
     py_vector_type sample(size_t n);
     
     #ifndef PYPLUSPLUS
-    boost::shared_ptr<Shape> _impl;
+    boost::shared_ptr<euter::Shape> _impl;
     #endif
 };
 

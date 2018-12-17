@@ -22,28 +22,28 @@ PyPopulation::~PyPopulation()
 
 }
 
-PopulationView const& PyPopulation::_get() const
+euter::PopulationView const& PyPopulation::_get() const
 {
 	return *_impl;
 }
 
-boost::shared_ptr<PopulationView> PyPopulation::createPopulation(
+boost::shared_ptr<euter::PopulationView> PyPopulation::createPopulation(
 	size_t size,
 	const bp::object& celltype,
-	boost::shared_ptr<Structure> const& structure,
+	boost::shared_ptr<euter::Structure> const& structure,
 	const std::string& label)
 {
 	if(!size) {
 		throw std::runtime_error("number of neurons must be a positiv integer");
 	}
 
-	CellType t = resolveCellType(celltype);
-	PopulationPtr p  = Population::create(getStore(), size, t, structure, label);
-	auto ret = boost::make_shared<PopulationView>(p);
+	euter::CellType t = resolveCellType(celltype);
+	euter::PopulationPtr p  = euter::Population::create(getStore(), size, t, structure, label);
+	auto ret = boost::make_shared<euter::PopulationView>(p);
 
 	if(!ret->population().parameters().supported()) {
 		std::string err = "BrainScaleS does not support this celltype: ";
-		err += getCellTypeName(t);
+		err += euter::getCellTypeName(t);
 		throw std::runtime_error(err);
 	}
 
@@ -67,7 +67,7 @@ namespace
 		return noCells;
 	}
 
-	boost::shared_ptr<Structure> getStructure(const bp::object& structure)
+	boost::shared_ptr<euter::Structure> getStructure(const bp::object& structure)
 	{
 		if(structure.ptr() != SentinelKeeper::emptyPyObject.ptr()) // Did we get a structure handed over?
 		{
@@ -76,24 +76,24 @@ namespace
 		}
 		else
 		{
-			return boost::make_shared<Line>();
+			return boost::make_shared<euter::Line>();
 		}
 	}
 
-	boost::shared_ptr<Structure> getStructure(const bp::tuple size)
+	boost::shared_ptr<euter::Structure> getStructure(const bp::tuple size)
 	{
 		// TODO: Determine structure using the tuple length
 		switch(bp::len(size))
 		{
 			case 1:
-				return boost::make_shared<Line>();
+				return boost::make_shared<euter::Line>();
 			case 2:
-				return boost::make_shared<Grid2D>(bp::extract<double>(size[0])/bp::extract<double>(size[1]));
+				return boost::make_shared<euter::Grid2D>(bp::extract<double>(size[0])/bp::extract<double>(size[1]));
 			case 3:
-				return boost::make_shared<Grid3D>(bp::extract<double>(size[0])/bp::extract<double>(size[1]),
+				return boost::make_shared<euter::Grid3D>(bp::extract<double>(size[0])/bp::extract<double>(size[1]),
 					bp::extract<double>(size[0])/bp::extract<double>(size[2]));
 			default:
-				return boost::make_shared<Line>();
+				return boost::make_shared<euter::Line>();
 		}
 	}
 }

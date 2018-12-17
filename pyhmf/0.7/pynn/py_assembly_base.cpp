@@ -9,6 +9,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 
+using namespace euter;
+
 PyAssemblyBase::~PyAssemblyBase()
 {
 }

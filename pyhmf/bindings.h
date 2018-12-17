@@ -5,6 +5,8 @@
 
 #include "pynn/api.h"
 
+using namespace euter;
+
 // central (overrides everything) renaming of C++ types for python wrapping
 namespace pyplusplus{ namespace aliases {
 	typedef std::map<std::string, double>           mapStringDouble;

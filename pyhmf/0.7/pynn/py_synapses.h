@@ -6,10 +6,14 @@
 #include "euter/synapses.h"
 #endif
 
+namespace euter {
 class ShortTermPlasticityMechanism;
+}
 
 #define DEFINE_WRAPPER(EUTER_CLASS, EUTER_BASE)                                \
+namespace euter {                                                              \
 class EUTER_CLASS;                                                             \
+}                                                                              \
 struct Py##EUTER_CLASS : public Py##EUTER_BASE                                 \
 {                                                                              \
 	Py##EUTER_CLASS(bp::dict params);                                          \
@@ -21,21 +25,24 @@ class PyShortTermPlasticityMechanism
 {
 public:
 	virtual ~PyShortTermPlasticityMechanism() {}
-	boost::shared_ptr<ShortTermPlasticityMechanism> impl() { return _impl; }
+	boost::shared_ptr<euter::ShortTermPlasticityMechanism> impl() { return _impl; }
 protected:
-	boost::shared_ptr<ShortTermPlasticityMechanism> _impl;
+	boost::shared_ptr<euter::ShortTermPlasticityMechanism> _impl;
 };
 
 DEFINE_WRAPPER(TsodyksMarkramMechanism, ShortTermPlasticityMechanism)
 
+namespace euter {
 class STDPWeightDependence;
+}
+
 class PySTDPWeightDependence
 {
 public:
 	virtual ~PySTDPWeightDependence() {}
-	boost::shared_ptr<STDPWeightDependence> impl() { return _impl; }
+	boost::shared_ptr<euter::STDPWeightDependence> impl() { return _impl; }
 protected:
-	boost::shared_ptr<STDPWeightDependence> _impl;
+	boost::shared_ptr<euter::STDPWeightDependence> _impl;
 };
 
 DEFINE_WRAPPER(AdditiveWeightDependence, STDPWeightDependence)
@@ -43,19 +50,24 @@ DEFINE_WRAPPER(MultiplicativeWeightDependence, STDPWeightDependence)
 DEFINE_WRAPPER(AdditivePotentiationMultiplicativeDepression, STDPWeightDependence)
 DEFINE_WRAPPER(GutigWeightDependence, STDPWeightDependence)
 
+namespace euter {
 class STDPTimingDependence;
+}
 class PySTDPTimingDependence
 {
 public:
 	virtual ~PySTDPTimingDependence() {}
-	boost::shared_ptr<STDPTimingDependence> impl() { return _impl; }
+	boost::shared_ptr<euter::STDPTimingDependence> impl() { return _impl; }
 protected:
-	boost::shared_ptr<STDPTimingDependence> _impl;
+	boost::shared_ptr<euter::STDPTimingDependence> _impl;
 };
 
 DEFINE_WRAPPER(SpikePairRule, STDPTimingDependence)
 
+namespace euter {
 class STDPMechanism;
+}
+
 class PySTDPMechanism
 {
 public:
@@ -72,12 +84,15 @@ public:
 			PySTDPWeightDependence& weight_dependence,
 			double dendritic_delay_fraction = 1.0
 			);
-	boost::shared_ptr<STDPMechanism> impl() { return _impl; }
+	boost::shared_ptr<euter::STDPMechanism> impl() { return _impl; }
 private:
-	boost::shared_ptr<STDPMechanism> _impl;
+	boost::shared_ptr<euter::STDPMechanism> _impl;
 };
 
+namespace euter {
 class SynapseDynamics;
+}
+
 class PySynapseDynamics
 {
 public:
@@ -91,7 +106,7 @@ public:
 			PyShortTermPlasticityMechanism fast,
 			PySTDPMechanism slow
 			);
-	boost::shared_ptr<SynapseDynamics> impl();
+	boost::shared_ptr<euter::SynapseDynamics> impl();
 private:
-	boost::shared_ptr<SynapseDynamics> _impl;
+	boost::shared_ptr<euter::SynapseDynamics> _impl;
 };

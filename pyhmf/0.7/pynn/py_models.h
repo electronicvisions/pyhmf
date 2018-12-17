@@ -12,7 +12,7 @@ void _loadPyNNCellTypes();
 #include <map>
 #include "euter/celltypes.h"
 
-CellType resolveCellType(bp::object obj);
-bp::object resolveCellType(CellType celltype);
+euter::CellType resolveCellType(bp::object obj);
+bp::object resolveCellType(euter::CellType celltype);
 
 #endif

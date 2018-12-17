@@ -2,6 +2,8 @@
 #include "py_current.h"
 #include "py_population_base.h"
 
+using namespace euter;
+
 PyID::PyID(const size_t v) :
 	mId(v), mParent()
 {
