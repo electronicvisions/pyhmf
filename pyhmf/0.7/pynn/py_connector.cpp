@@ -266,11 +266,11 @@ PyFromListConnector::create(bp::object conn_list) {
 		size_t from = bp::extract<size_t>(conn_list[ii][0]);
 		size_t to = bp::extract<size_t>(conn_list[ii][1]);
 		connections[ii] = FromListConnector::Connection{from,to};
-		if(len(conn_list[ii]) >= 2)
+		if(len(conn_list[ii]) >= 3)
 		{
 			weigths[ii] = bp::extract<value_type>(conn_list[ii][2]);
 		}
-		if(len(conn_list[ii]) >= 3)
+		if(len(conn_list[ii]) >= 4)
 		{
 			delays[ii] = bp::extract<value_type>(conn_list[ii][3]);
 		}
