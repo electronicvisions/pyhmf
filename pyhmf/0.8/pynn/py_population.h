@@ -51,8 +51,6 @@ public:
 	
 	PopulationView const& _get() const;
 
-	size_t euter_id() const;
-
 private:
 	static boost::shared_ptr<PopulationView> createPopulation(
 	        size_t size,

@@ -97,6 +97,9 @@ public:
 	boost::shared_ptr<PopulationView> _impl;
 
 	friend class PyPopulationView;
+
+	size_t euter_id() const;
+
 protected:
 	PyPopulationBase(const boost::shared_ptr<PopulationView> & impl);
 

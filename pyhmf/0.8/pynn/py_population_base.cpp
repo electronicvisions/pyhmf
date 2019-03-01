@@ -220,3 +220,8 @@ void PyPopulationBase::tset(std::string parametername, npyarray value_array)
 {
 	NOT_IMPLEMENTED();
 }
+
+size_t PyPopulationBase::euter_id() const
+{
+	return _impl->population().id();
+}

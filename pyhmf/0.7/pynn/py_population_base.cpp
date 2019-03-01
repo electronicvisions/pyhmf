@@ -277,3 +277,8 @@ void PyPopulationBase::tset(std::string const& parameter_name, bp::object const&
 	for (size_t ii = 0; ii < proxy.size(); ++ii)
 		proxy[ii].set(parameter_name, value_array[ii]);
 }
+
+size_t PyPopulationBase::euter_id() const
+{
+	return _impl->population().id();
+}

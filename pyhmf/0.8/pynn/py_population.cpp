@@ -26,11 +26,6 @@ PopulationView const& PyPopulation::_get() const
 	return *_impl;
 }
 
-size_t PyPopulation::euter_id() const
-{
-	return _get().population().id();
-}
-
 boost::shared_ptr<PopulationView> PyPopulation::createPopulation(
         size_t size,
         const bp::object& celltype,
