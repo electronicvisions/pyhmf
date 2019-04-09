@@ -52,8 +52,8 @@ public:
 	/// Returns the number of spikes for each neuron.
 	py_vector_type get_spike_counts(bool gather = true);
 
-	/// Return a 2-column numpy array containing cell ids and Vm for
-	/// recorded cells.
+	// Return a 3-column numpy array containing cell ids, times and Vm
+	// for recorded cells.
 	bp::object get_v(bool gather = true, bool compatible_output = true);
 
 	/// Given the ID(s) of cell(s) in the PyPopulation, return its (their) index
