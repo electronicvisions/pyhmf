@@ -82,14 +82,13 @@ def build(bld):
         **flags)
 
     bld(target          = 'pyhmf',
-        features        = 'cxx cxxshlib pypp pyext pyembed post_task',
+        features        = 'cxx cxxshlib pypp pyext pyembed',
         script          = 'bindings/generate.py',
         gen_defines     = ['PYPLUSPLUS', '__STRICT_ANSI__'],
         headers         = 'bindings.h',
         use             = [
             'pyhmf_inc', 'pyhmf_impl', 'pyublas', 'pywrapstdvector', 'pycellparameters'],
         install_path    = 'lib',
-        post_task       = ['pyester', 'pyhmf_python_tests'],
         **flags)
 
     bld(target          = 'pyhmf_testing',
@@ -102,7 +101,7 @@ def build(bld):
         **flags)
 
     bld(target          = 'pyhmf_python_tests',
-        features        = 'pytest',
+        features        = 'use pytest',
         tests           = bld.path.ant_glob('test/test_*.py', excl=[
             'test/test_connectors.py', # crashing due to nest?
         ]),
