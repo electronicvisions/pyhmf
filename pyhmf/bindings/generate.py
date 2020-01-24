@@ -248,7 +248,6 @@ Kwargs:
     min_delay: (float) ignored
     max_delay: (float) ignored
     marocco:   (pymarocco.PyMarocco) High-level interface to the marocco framework. Allows to set parameters of the placement, routing and parameter transformation algorithms. Provides access to post-mapping data like the mapping lookup table or mapping statistics.
-    ester:     (pyester.PyEster) Settings of the experiment broker.
 
 Returns:
     1 (integer) number of MPI processes of the PyNN backend (always 1 for PyHMF frontend)

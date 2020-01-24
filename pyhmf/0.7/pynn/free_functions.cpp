@@ -8,7 +8,8 @@
 #include "pyhmf/objectstore.h"
 #include "euter/exceptions.h"
 #include "euter/metadata.h"
-#include "submit.h"
+
+#include "marocco/mapping.h"
 
 using namespace euter;
 
@@ -48,9 +49,15 @@ int clear()
 // special user-side implementations
 int run(double runtime)
 {
-	ObjectStore& local = getStore();
-	local.run(runtime);
-	submit(local);
+	auto store = getStore();
+
+	store.run(runtime);
+
+	marocco::mapping::run(store);
+
+	// check the result
+	store.check();
+
 	return 1;
 }
 
