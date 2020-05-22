@@ -17,7 +17,6 @@ def ESS_available():
         import pymarocco
         marocco = pymarocco.PyMarocco()
         marocco.backend = pymarocco.PyMarocco.ESS
-        marocco.neuron_placement.skip_hicanns_without_neuron_blacklisting(False)
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
         marocco.defects.backend = pymarocco.Defects.Backend.None
@@ -45,7 +44,6 @@ class TestSpikeRecording(unittest.TestCase):
         marocco = pymarocco.PyMarocco()
         marocco.backend = pymarocco.PyMarocco.ESS
         marocco.experiment_time_offset = 5.e-7
-        marocco.neuron_placement.skip_hicanns_without_neuron_blacklisting(False)
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
         marocco.defects.backend = pymarocco.Defects.Backend.None
