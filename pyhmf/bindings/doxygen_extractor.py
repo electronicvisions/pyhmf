@@ -5,6 +5,7 @@ Distributed under the Boost Software License, Version 1.0. (See
 accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
 """
+from functools import reduce
 
 class doxygen_doc_extractor:
 	"""
@@ -24,11 +25,11 @@ class doxygen_doc_extractor:
 
 			find_block_end = False
 			doc_lines = []
-			for lcount in xrange(declaration.location.line-2, -1, -1):
+			for lcount in range(declaration.location.line-2, -1, -1):
 				line = self.source[lcount]
 				if not find_block_end:
 					try:
-						print line.rstrip()[-2:]
+						print(line.rstrip()[-2:])
 						if line.rstrip()[-2:] == "*/":
 							find_block_end = True
 					except:

@@ -34,6 +34,6 @@ run(10)
 
 a = Population(10, IF_brainscales_hardware)
 a.set("tau_m", 5.0)
-print a
+print(a)
 a.set({"tau_m": 5.5})
-print a
+print(a)

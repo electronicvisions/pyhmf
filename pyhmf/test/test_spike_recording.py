@@ -82,11 +82,11 @@ class TestSpikeRecording(unittest.TestCase):
         # check that cell ids refer to the index in the Population.
         s_p1 = p1.getSpikes()
         s_p1 = s_p1[np.argsort(s_p1[:,1])] # sort by time
-        self.assertTrue( np.array_equal(range(10), s_p1[:,0]) )
+        self.assertTrue( np.array_equal(list(range(10)), s_p1[:,0]) )
 
         s_p2 = p2.getSpikes()
         s_p2 = s_p2[np.argsort(s_p2[:,1])] # sort by time
-        self.assertTrue( np.array_equal(range(10), s_p2[:,0]) )
+        self.assertTrue( np.array_equal(list(range(10)), s_p2[:,0]) )
 
         # for PopulationViews we also expect the index in the parent Population
         self.assertEqual( set(p2[0:1].getSpikes()[:,0]), set(range(1)) )
@@ -100,7 +100,7 @@ class TestSpikeRecording(unittest.TestCase):
         s_a = a.getSpikes()
         # when sorted, ids should be: range(10,20) + range(5)
         s_a = s_a[np.argsort(s_a[:,1])] # sort by time
-        self.assertTrue( np.array_equal(range(10,20)+range(5), s_a[:,0]) )
+        self.assertTrue( np.array_equal(list(range(10,20))+list(range(5)), s_a[:,0]) )
 
 if __name__ == '__main__':
     unittest.main()

@@ -237,7 +237,7 @@ class FixedNumberPreConnectorTest(ConnectorTest, unittest.TestCase):
         seed = 1337
         c_args = {'n': random.randint(0, size)}
 
-        print c_args, size
+        print(c_args, size)
 
         numpy.testing.assert_equal(
                 self.construct_with_backend(pynn, size, weights, c_args=c_args, seed=seed)*0,
@@ -310,7 +310,7 @@ class DistanceDependentProbabilityConnectorTest(unittest.TestCase):
 
         return projection.getWeights(format='array').astype(numpy.float32)
 
-    @parametrize(d_expr_modes.keys())
+    @parametrize(list(d_expr_modes.keys()))
     def test_d_expression(self, d_expr_mode):
 
         size = random.randint(2, 10)**2

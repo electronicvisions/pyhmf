@@ -87,9 +87,9 @@ class InconsistentSignature(Result):
 
 def funcArgs(func):
     if hasattr(func,'im_func'):
-        func = func.im_func
+        func = func.__func__
     if hasattr(func,'func_code'):
-        code = func.func_code
+        code = func.__code__
         fname = code.co_name
         args = inspect.getargspec(func)
     elif hasattr(func, 'func_doc'):
@@ -101,9 +101,9 @@ def funcArgs(func):
     try:
         func_args = "%s(%s)" % (fname, inspect.formatargspec(*args))
         return func_args
-    except TypeError, e:
-        print e
-        print "Error with", func
+    except TypeError as e:
+        print(e)
+        print("Error with", func)
         return "%s()" % fname
 
 
@@ -114,8 +114,8 @@ def checkFunction(func):
     differences = ""
     common_args = funcArgs(func)
     common_doc  = func.__doc__
-    if dir(pyhmf).__contains__(func.func_name):
-        modfunc = getattr(pyhmf, func.func_name)
+    if dir(pyhmf).__contains__(func.__name__):
+        modfunc = getattr(pyhmf, func.__name__)
         module_args = funcArgs(modfunc)
         if common_args == module_args:
             module_doc = modfunc.__doc__
@@ -141,14 +141,14 @@ def checkMethod(meth,classname):
     __doc__ strings."""
     str = ""
     differences = ""
-    common_args = funcArgs(meth.im_func)
-    common_doc  = meth.im_func.__doc__
+    common_args = funcArgs(meth.__func__)
+    common_doc  = meth.__func__.__doc__
     if hasattr(pyhmf, classname):
         cls = getattr(pyhmf, classname)
-        if hasattr(cls, meth.im_func.func_name): #dir(cls).__contains__(meth.im_func.func_name):
-            modulemeth = getattr(cls, meth.im_func.func_name)
+        if hasattr(cls, meth.__func__.__name__): #dir(cls).__contains__(meth.im_func.func_name):
+            modulemeth = getattr(cls, meth.__func__.__name__)
             module_args = funcArgs(modulemeth)
-            module_doc  = modulemeth.im_func.__doc__
+            module_doc  = modulemeth.__func__.__doc__
 
             return InconsistentSignature(common_args + " != " + module_args)
         else:
@@ -163,8 +163,8 @@ def checkStaticMethod(meth,classname):
     common_args = funcArgs(meth)
     common_doc  = meth.__doc__
     cls = getattr(pyhmf, classname)
-    if dir(cls).__contains__(meth.func_name):
-        modulemeth = getattr(cls,meth.func_name)
+    if dir(cls).__contains__(meth.__name__):
+        modulemeth = getattr(cls,meth.__name__)
         module_args = funcArgs(modulemeth)
         module_doc = modulemeth.__doc__
         return InconsistentSignature(common_args + "!=" + module_args)
@@ -315,18 +315,18 @@ if __name__ == "__main__":
                 result = checkFunction(fm)
                 writeln(item, result.to_cstring())
                 if args.verbose and result.message:
-                    print 8*" " + " | " + result.message
+                    print(8*" " + " | " + result.message)
                 if isinstance(result, Success):
                     suite_top_level.append(TestCase(item, TestCase.SUCCESS))
                 else:
                     suite_top_level.append(TestCase(item, TestCase.ERROR, result.__class__.__name__))
-            elif type(fm) == types.ClassType or type(fm) == types.TypeType:
+            elif type(fm) == type or type(fm) == type:
                 suite = TestSuite(item)
                 
                 result = checkClass(item)
                 writeln(item, result.to_cstring())
                 if args.verbose and result.message:
-                    print 8*" " + " | " + result.message
+                    print(8*" " + " | " + result.message)
                 if isinstance(result, Success):
                     suite.append(TestCase(item, TestCase.SUCCESS))
                 else:
@@ -338,7 +338,7 @@ if __name__ == "__main__":
                             result = checkMethod(fm1, item)
                             writeln(subitem, result.to_cstring(), 4)
                             if args.verbose and result.message:
-                                print 8*" " + " | " + result.message
+                                print(8*" " + " | " + result.message)
                             if isinstance(result, Success):
                                 suite.append(TestCase(subitem, TestCase.SUCCESS))
                             else:
@@ -347,7 +347,7 @@ if __name__ == "__main__":
                             result = checkStaticMethod(fm1, item)
                             writeln(subitem, result.to_cstring(), 4)
                             if args.verbose and result.message:
-                                print 8*" " + " | " + result.message
+                                print(8*" " + " | " + result.message)
                             if isinstance(result, Success):
                                 suite.append(TestCase(subitem, TestCase.SUCCESS))
                             else:
@@ -360,7 +360,7 @@ if __name__ == "__main__":
                 result = checkData(item)
                 writeln(item, result.to_cstring())
                 if args.verbose and result.message:
-                    print 8*" " + " | " + result.message
+                    print(8*" " + " | " + result.message)
                 if isinstance(result, Success):
                     suite_top_level.append(TestCase(item, TestCase.SUCCESS))
                 else:

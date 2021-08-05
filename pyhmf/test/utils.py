@@ -6,7 +6,7 @@ class FailureWarning(Warning):
     pass
 
 def get_parent_class(m):
-    for cls in inspect.getmro(m.im_class):
+    for cls in inspect.getmro(m.__self__.__class__):
         if m.__name__ in cls.__dict__: return cls
 
 

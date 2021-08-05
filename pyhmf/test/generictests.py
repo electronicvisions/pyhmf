@@ -7,7 +7,7 @@ import sys
 import unittest
 import numpy
 import os
-import cPickle as pickle
+import pickle as pickle
 from pyNN import common, random, utility, recording, errors, space
 import glob
 
@@ -50,7 +50,7 @@ class CreationTest(unittest.TestCase):
                 cells_per_process = 10.0
             else:
                 cells_per_process = 10.0/sim.num_processes()
-            self.assert_(numpy.floor(cells_per_process) <= len(local_cells) <=  numpy.ceil(cells_per_process), "cells per process: %d, local cells: %d" % (cells_per_process, len(local_cells)))
+            self.assertTrue(numpy.floor(cells_per_process) <= len(local_cells) <=  numpy.ceil(cells_per_process), "cells per process: %d, local cells: %d" % (cells_per_process, len(local_cells)))
        
     def testCreateStandardCellsWithNegative_n(self):
         """create(): n must be positive definite"""
@@ -169,7 +169,7 @@ class IDSetGetTest(unittest.TestCase):
         for cell_class in IDSetGetTest.model_list:
             cell_list = [cell for cell in self.cells[cell_class.__name__] if cell.local] + \
                         [cell for cell in self.populations[cell_class.__name__].local_cells]
-            parameter_names = cell_class.default_parameters.keys()
+            parameter_names = list(cell_class.default_parameters.keys())
             for cell in cell_list:
                 for name in parameter_names:
                     if name == 'spike_times':
@@ -180,7 +180,7 @@ class IDSetGetTest(unittest.TestCase):
                         assert isinstance(o, list), type(o)
                         try:
                             assert i == o, "%s (%s) != %s (%s)" % (i,o, type(i), type(o))
-                        except ValueError, errmsg:
+                        except ValueError as errmsg:
                             raise ValueError("%s. %s (%s) != %s (%s)" % (errmsg, i, type(i), o, type(o)))
                         self.assertEqual(i, o)
                     else:
@@ -200,7 +200,7 @@ class IDSetGetTest(unittest.TestCase):
                             i = numpy.random.uniform(0.1, 100) # tau_refrac is always at least dt (=0.1)
                         try:
                             cell.__setattr__(name, i)
-                        except Exception, e:
+                        except Exception as e:
                             raise Exception("%s. %s=%g in %s with %s" % (e, name, i, cell_class, cell.get_parameters()))
                         o = cell.__getattr__(name)
                         self.assertEqual(type(i), type(o), "%s: input: %s, output: %s" % (name, type(i), type(o)))
@@ -216,7 +216,7 @@ class IDSetGetTest(unittest.TestCase):
         for cell_class in IDSetGetTest.model_list:
             cell_list = [cell for cell in self.cells[cell_class.__name__] if cell.local] + \
                         [cell for cell in self.populations[cell_class.__name__].local_cells]
-            parameter_names = cell_class.default_parameters.keys()
+            parameter_names = list(cell_class.default_parameters.keys())
             if 'v_thresh' in parameter_names: # make sure 'v_thresh' comes first
                 parameter_names.remove('v_thresh')
                 parameter_names = ['v_thresh'] + parameter_names
@@ -238,7 +238,7 @@ class IDSetGetTest(unittest.TestCase):
                         new_parameters[name] = numpy.random.uniform(0.1, 100) # tau_refrac is always at least dt (=0.1)
                 try:
                     cell.set_parameters(**new_parameters)
-                except Exception, e:
+                except Exception as e:
                     raise Exception("%s. %s in %s" % (e, new_parameters, cell_class))
                 retrieved_parameters = cell.get_parameters()
                 self.assertEqual(set(new_parameters.keys()), set(retrieved_parameters.keys()))
@@ -252,7 +252,7 @@ class IDSetGetTest(unittest.TestCase):
                                                "%s in %s: %s != %s" % (name, cell_class.__name__, i,o))
     
     def testGetCellClass(self):
-        for name, pop in self.populations.items():
+        for name, pop in list(self.populations.items()):
             assert isinstance(pop[0], common.IDMixin)
             if len(pop.local_cells)>0:
                 self.assertEqual(pop.local_cells[0].cellclass.__name__, name)
@@ -260,7 +260,7 @@ class IDSetGetTest(unittest.TestCase):
             self.assertRaises(Exception, setattr, pop[0].cellclass, 'dummy')
         
     def testGetSetPosition(self):
-        for cell_group in self.cells.values():
+        for cell_group in list(self.cells.values()):
             pos = cell_group[0].position
             self.assertEqual(len(pos), 3)
             cell_group[0].position = (9.8, 7.6, 5.4)
@@ -368,7 +368,7 @@ class PopulationIteratorTest(unittest.TestCase):
         for net in self.net1, self.net2:
             ids = [i for i in net]
             self.assertEqual(ids, net.local_cells.tolist())
-            self.assert_(isinstance(ids[0], common.IDMixin))
+            self.assertTrue(isinstance(ids[0], common.IDMixin))
 
     
 # ==============================================================================
@@ -439,7 +439,7 @@ class PopulationSetTest(unittest.TestCase):
                     self.assertAlmostEqual(a[name], -78.9, places=5)
             else:
                 for b,a in zip(before,after):
-                    self.assert_(b[name] == a[name], "%s: %s != %s" % (name, b[name], a[name]))
+                    self.assertTrue(b[name] == a[name], "%s: %s != %s" % (name, b[name], a[name]))
                 
     def test_set_invalid_type(self):
         self.assertRaises(errors.InvalidParameterValueError, self.p1.set, 'foo', {})
@@ -785,7 +785,7 @@ class ProjectionInitTest(unittest.TestCase):
                             self.assertEqual(total_connections, c.n*len(srcP))
                         else:
                             conn_per_node = float(c.n*len(srcP))/sim.num_processes()
-                            self.assert_(0.8*conn_per_node < len(prj1.connections) < 1.2*conn_per_node+2, "len(connections)=%d, conn_per_node=%d prj=%s, n=%d" % (len(prj1.connections), conn_per_node, prj1.label, c.n) )
+                            self.assertTrue(0.8*conn_per_node < len(prj1.connections) < 1.2*conn_per_node+2, "len(connections)=%d, conn_per_node=%d prj=%s, n=%d" % (len(prj1.connections), conn_per_node, prj1.label, c.n) )
                     
                 prj2 = sim.Projection(srcP, tgtP, c3) # just a test that no Exceptions are raised
         self.assertRaises(Exception, sim.FixedNumberPostConnector, None)
@@ -1145,5 +1145,5 @@ if __name__ == "__main__":
     #sim = __import__("pyNN.%s" % sim_name, None, None, [sim_name])
     sim = __import__("libeuter", None, None)#, [sim_name])
     sim.setup()
-    print "this", sim.IF_cond_exp
+    print("this", sim.IF_cond_exp)
     unittest.main()

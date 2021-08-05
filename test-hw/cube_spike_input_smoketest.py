@@ -186,25 +186,25 @@ for ii in range(fg.getNoProgrammingPasses()):
     cfg.fg_bias = 0
     fg.setFGConfig(C.Enum(ii), cfg)
 
-print '#########################################################################'
+print('#########################################################################')
 for denmem in denmems:
-    print "analog parameters for denmem", denmem
-    print 'E_l:  ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_l)
-    print 'V_syntcx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syntcx)
-    print 'V_syntci:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syntci)
-    print 'I_gl (tau_m):   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_gl)
-    print 'I_pl (tau_ref):   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_pl)
-    print 'V_syni:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syni)
-    print 'V_synx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_synx)
-    print 'I_convi:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_convi)
-    print 'I_convx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_convx)
-    print 'V_convoffi:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_convoffi)
-    print 'V_convoffx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_convoffx)
-    print 'V_threshold:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_t)
-    print 'E_syni:    ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_syni)
-    print 'E_synx:    ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_synx)
+    print("analog parameters for denmem", denmem)
+    print('E_l:  ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_l))
+    print('V_syntcx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syntcx))
+    print('V_syntci:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syntci))
+    print('I_gl (tau_m):   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_gl))
+    print('I_pl (tau_ref):   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_pl))
+    print('V_syni:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_syni))
+    print('V_synx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_synx))
+    print('I_convi:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_convi))
+    print('I_convx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.I_convx))
+    print('V_convoffi:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_convoffi))
+    print('V_convoffx:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_convoffx))
+    print('V_threshold:   ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.V_t))
+    print('E_syni:    ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_syni))
+    print('E_synx:    ', h.floating_gates.getNeuron(denmem, pyhalbe.HICANN.neuron_parameter.E_synx))
 
-print '#########################################################################'
+print('#########################################################################')
 h.use_big_capacitors(True)
 h.set_speed_up_gl(pysthal.SpeedUp.NORMAL)
 h.set_speed_up_gladapt(pysthal.SpeedUp.SLOW)
@@ -243,7 +243,7 @@ if args.outdir:
     p.xlabel("time [s]")
     p.ylabel("V_mem [converted mV]")
 
-    for _, region in regions.items():
+    for _, region in list(regions.items()):
         p.axvspan((region[0] + start_offset) / 1000. / 10000., region[1] / 1000. / 10000.,
                   alpha=.1, color='k')
 
@@ -252,7 +252,7 @@ if args.outdir:
         "v.png"))
 
 results = {}
-for name, region in regions.items():
+for name, region in list(regions.items()):
 
     mask = p.logical_and(
         t >= (region[0] + start_offset) / 1000. / 10000.,
@@ -268,7 +268,7 @@ f = open(os.path.join(
     args.outdir,
     "result.txt"), "w")
 
-for name, l in results.items():
+for name, l in list(results.items()):
     f.write("\t".join([name] + [str(i) for i in l]) + "\n")
 
 f.close()

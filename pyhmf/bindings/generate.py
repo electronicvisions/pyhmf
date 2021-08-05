@@ -264,13 +264,13 @@ mb.add_registration_code('bp::scope().attr("setup").attr("__doc__") = bp::str("%
 
 
 # TODO: use logging, WARN or ERROR
-print "Missing class definitions (w.r.t. PyNN):"
-print '\t' + ' '.join(missing_classes)
+print("Missing class definitions (w.r.t. PyNN):")
+print('\t' + ' '.join(missing_classes))
 if missing_class_factories:
-    print "Missing class factories:"
-    print '\t' + ' '.join(missing_class_factories)
-print "Missing function definitions (w.r.t. PyNN):"
-print '\t' + ' '.join(missing_functions)
+    print("Missing class factories:")
+    print('\t' + ' '.join(missing_class_factories))
+print("Missing function definitions (w.r.t. PyNN):")
+print('\t' + ' '.join(missing_functions))
 
 ### END
 

@@ -65,7 +65,7 @@ class TestAPIChanges(unittest.TestCase):
         elif self.API_VERSION == "0.7":
             def generate_spike_times(i_range):
                 return [numpy.add.accumulate(numpy.random.exponential(10.0, size=10)) for i in i_range]
-            p = pyhmf.Population(30, pyhmf.SpikeSourceArray, {'spike_times': generate_spike_times(range(30))})
+            p = pyhmf.Population(30, pyhmf.SpikeSourceArray, {'spike_times': generate_spike_times(list(range(30)))})
 
     def test_issue2049(self):
         p = pyhmf.Population(1000, pyhmf.EIF_cond_exp_isfa_ista)

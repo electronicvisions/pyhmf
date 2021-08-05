@@ -85,7 +85,7 @@ class PopulationView(unittest.TestCase):
         pop = pynn.Population(N, model)
 
         all_spike_times = []
-        for i in xrange(N):
+        for i in range(N):
             t = float(i)
             all_spike_times.append([t, t+1, t+2, t+3])
         pop.tset('spike_times', all_spike_times)
