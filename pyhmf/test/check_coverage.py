@@ -320,7 +320,7 @@ if __name__ == "__main__":
                     suite_top_level.append(TestCase(item, TestCase.SUCCESS))
                 else:
                     suite_top_level.append(TestCase(item, TestCase.ERROR, result.__class__.__name__))
-            elif type(fm) == type or type(fm) == type:
+            elif type(fm) == type:
                 suite = TestSuite(item)
                 
                 result = checkClass(item)

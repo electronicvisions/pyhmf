@@ -78,7 +78,7 @@ int setup(bp::tuple args,
 
 	ObjectStore::metadata_map metadata;
 
-	for (bp::stl_input_iterator<bp::tuple> it(kwparam.iteritems()), end; it != end; it++)
+	for (bp::stl_input_iterator<bp::tuple> it(kwparam.items()), end; it != end; it++)
 	{
 		bp::tuple key_value = *it;
 		// ECM (2016-09-01): We pass the shared_ptr  to C++, so let's

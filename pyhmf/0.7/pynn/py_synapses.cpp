@@ -21,7 +21,7 @@ Py##EUTER_CLASS::Py##EUTER_CLASS(bp::dict params)                               
 	boost::shared_ptr<EUTER_CLASS> impl = boost::make_shared<EUTER_CLASS>();    \
 	ParameterProxy proxy = getParameterProxy(impl->mParams);                    \
 	typedef bp::stl_input_iterator<bp::tuple> dict_iterator;                    \
-	for(dict_iterator i(params.iteritems()), end; i!=end; ++i)                  \
+	for(dict_iterator i(params.items()), end; i!=end; ++i)                  \
 	{                                                                           \
 		bp::tuple t = (*i);                                                     \
 		proxy.set(bp::extract<std::string>(t[0]), t[1]);                        \

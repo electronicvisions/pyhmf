@@ -121,7 +121,7 @@ for cl in pynn_classes + helper_classes:
 
     # Exclude members and functions starting with single underscore or ending with Cpp
     c.mem_funs(py_member_filter, allow_empty=True).exclude()
-    c.vars(py_member_filter, allow_empty=True).exclude()
+    c.variables(py_member_filter, allow_empty=True).exclude()
 
     # Exclude protected and private member functions
     c.mem_funs(access_type_matcher_t('protected'), allow_empty=True).exclude()

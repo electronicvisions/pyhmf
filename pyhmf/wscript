@@ -36,11 +36,12 @@ def configure(cfg):
 
     cfg.check_python_version(minver=(2,5))
     cfg.check_python_headers()
-    cfg.env['DEFINES_PYEMBED'] = filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEMBED'])
-    cfg.env['DEFINES_PYEXT'] = filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEXT'])
+    cfg.env['DEFINES_PYEMBED'] = list(filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEMBED']))
+    cfg.env['DEFINES_PYEXT'] = list(filter(lambda a: a != 'NDEBUG', cfg.env['DEFINES_PYEXT']))
 
     cfg.check_boost(lib='python', uselib_store='BOOST4PYHMF')
-    boost_version = map(int, cfg.env.BOOST_VERSION.split('_'))
+
+    boost_version = list(map(int, cfg.env.BOOST_VERSION.split('_')))
     if boost_version < [1,49]:
         cfg.fatal("have boost %s need boost >= 1.49 due to variadic preprocessor stuff" % '.'.join(cfg.env.BOOST_VERSION.split('_')))
     elif boost_version > [1,63]:
