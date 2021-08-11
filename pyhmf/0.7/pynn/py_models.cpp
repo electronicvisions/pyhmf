@@ -27,7 +27,15 @@
 #define BUILD_RELATION(r, _, elm) \
     (euter::CellType::elm, bp::scope().attr(BOOST_PP_STRINGIZE(elm)))
 
-typedef boost::bimap<euter::CellType, bp::object> ct_map_t;
+// Boost bimap requires std::less< KeyType > comparison, which is not implemented for bp objects.
+// Using pyhton 2 the default __cmp__ method was used -> breaks in python 3.
+// -> define and use any custom compare implementation for bp::objects.
+auto bp_object_compare = [](const bp::object& a, const bp::object& b) {
+	return (a.attr("__name__") < b.attr("__name__"));
+};
+typedef boost::
+    bimap<euter::CellType, boost::bimaps::set_of<bp::object, decltype(bp_object_compare)>>
+        ct_map_t;
 const ct_map_t celltypeMap;
 
 // Shame on me... TODO CK place later in a better position
