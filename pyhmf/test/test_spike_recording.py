@@ -19,7 +19,7 @@ def ESS_available():
         marocco.backend = pymarocco.PyMarocco.ESS
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
-        marocco.defects.backend = pymarocco.Defects.Backend.None
+        marocco.defects.backend = pymarocco.Defects.Backend.Without
         marocco.hicann_configurator = pysthal.HICANNConfigurator()
 
         pynn.setup(marocco=marocco)
@@ -46,7 +46,7 @@ class TestSpikeRecording(unittest.TestCase):
         marocco.experiment_time_offset = 5.e-7
         marocco.continue_despite_synapse_loss = True
         marocco.calib_backend = pymarocco.PyMarocco.CalibBackend.Default
-        marocco.defects.backend = pymarocco.Defects.Backend.None
+        marocco.defects.backend = pymarocco.Defects.Backend.Without
         marocco.hicann_configurator = pysthal.HICANNConfigurator()
 
         setup_params = dict()
