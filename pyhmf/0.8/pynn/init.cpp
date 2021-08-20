@@ -36,4 +36,11 @@ void initialize()
 	_loadPyNNFileTypes();
 	_loadPyNNCellTypes();
 	_loadPyNNErrors();
+
+	// The static instance of emptyPyDict leads to a segfault on python exit.
+	// There seems to be a problem in cpython. The reference counter is
+	// decreased even if the thread state is already gone,
+	// cf. https://github.com/boostorg/python/issues/248#issuecomment-546260303.
+	// As a workaround we increase the python reference counter from the beginning.
+	bp::incref(SentinelKeeper::emptyPyDict.ptr());
 }
