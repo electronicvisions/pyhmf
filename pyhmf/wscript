@@ -105,9 +105,12 @@ def build(bld):
         tests           = bld.path.ant_glob('test/test_*.py', excl=[
             'test/test_connectors.py', # crashing due to nest?
         ]),
-        pythonpath      = '.',
-        use             = ['pyhmf', 'pyhmf_testing', 'pyublas'],
+        use             = ['pyhmf', 'pyhmf_testing', 'pyublas', 'pymarocco_scripts'],
         install_path    = os.path.join('bin', 'tests'),
         test_timeout    = 180, # ECM: empirical data :)
+        test_environ    = {
+            # env variable is set in marocco/wscript
+            'MAROCCO_VERSION_DATADIR': bld.env.MAROCCO_VERSION_DATADIR
+        }
     )
     bld.add_post_fun(summary)
