@@ -20,8 +20,8 @@ class SpaceTest(unittest.TestCase):
         B = np.random.rand(3, 100)
 
         np.testing.assert_equal(
-                pyhmf.Space().distances(A, B),
-                pynn.Space().distances(A, B)
+                pyhmf.Space().distances(A, B).flatten(),
+                pynn.Space().distances(A.T, B.T)
                 )
     
     
@@ -31,8 +31,8 @@ class SpaceTest(unittest.TestCase):
         B = np.random.rand(3, 100)
 
         np.testing.assert_equal(
-                pyhmf.Space(scale_factor=42.).distances(A, B),
-                pynn.Space(scale_factor=42.).distances(A, B)
+                pyhmf.Space(scale_factor=42.).distances(A, B).flatten(),
+                pynn.Space(scale_factor=42.).distances(A.T, B.T)
                 )
    
 
@@ -44,8 +44,8 @@ class SpaceTest(unittest.TestCase):
         offset = np.random.rand(3, 1)
 
         np.testing.assert_equal(
-                pyhmf.Space(offset=offset).distances(A, B),
-                pynn.Space(offset=offset).distances(A, B)
+                pyhmf.Space(offset=offset).distances(A, B).flatten(),
+                pynn.Space(offset=offset.T).distances(A.T, B.T)
                 )
 
 
@@ -57,8 +57,8 @@ class SpaceTest(unittest.TestCase):
         offset = np.random.rand(3, 1)
         
         np.testing.assert_equal(
-                pyhmf.Space(scale_factor=42., offset=offset).distances(A, B),
-                pynn.Space(scale_factor=42., offset=offset).distances(A, B)
+                pyhmf.Space(scale_factor=42., offset=offset).distances(A, B).flatten(),
+                pynn.Space(scale_factor=42., offset=offset.T).distances(A.T, B.T)
                 )
    
 
@@ -68,8 +68,8 @@ class SpaceTest(unittest.TestCase):
         B = np.random.rand(3, 100)
 
         np.testing.assert_equal(
-                pyhmf.Space(periodic_boundaries=((0, 1), None, (0, 1))).distances(A, B),
-                pynn.Space(periodic_boundaries=((0, 1), None, (0, 1))).distances(A, B)
+                pyhmf.Space(periodic_boundaries=((0, 1), None, (0, 1))).distances(A, B).flatten(),
+                pynn.Space(periodic_boundaries=((0, 1), None, (0, 1))).distances(A.T, B.T)
                 )
    
 
@@ -81,8 +81,8 @@ class SpaceTest(unittest.TestCase):
         offset = np.random.rand(3, 1)
         
         np.testing.assert_equal(
-                pyhmf.Space(scale_factor=42., offset=offset, periodic_boundaries=((0, 42.), None, (0, 42.))).distances(A, B),
-                pynn.Space(scale_factor=42., offset=offset, periodic_boundaries=((0, 42.), None, (0, 42.))).distances(A, B)
+                pyhmf.Space(scale_factor=42., offset=offset, periodic_boundaries=((0, 42.), None, (0, 42.))).distances(A, B).flatten(),
+                pynn.Space(scale_factor=42., offset=offset.T, periodic_boundaries=((0, 42.), None, (0, 42.))).distances(A.T, B.T)
                 )
 
 

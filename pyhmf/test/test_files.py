@@ -27,12 +27,12 @@ class FileTest(object):
                 pyhmf.Population(size_b, pyhmf.IF_cond_exp),
                 conn_pyhmf)
         
-        proj_pyhmf.saveConnections(getattr(pyhmf, self.file_type)(path, 'w'))
+        proj_pyhmf.saveConnections(getattr(pyhmf, self.file_type)(path, 'wb'))
 
         conn_pynn = pynn.FromFileConnector(getattr(pynn.recording.files, self.file_type)(path))
         proj_pynn = pynn.Projection(
-                pynn.Population(size_a, pynn.IF_cond_exp),
-                pynn.Population(size_b, pynn.IF_cond_exp),
+                pynn.Population(size_a, pynn.IF_cond_exp()),
+                pynn.Population(size_b, pynn.IF_cond_exp()),
                 conn_pynn)
 
         numpy.testing.assert_equal(proj_pyhmf.getWeights(format='array'), proj_pynn.getWeights(format='array'))
