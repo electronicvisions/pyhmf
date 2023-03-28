@@ -295,6 +295,29 @@ void PyProjection::saveConnections(bp::object file, bool gather, bool compatible
 	*/
 }
 
+/// Get connection matrix
+pyublas::numpy_vector<double> PyProjection::getConnections()
+{
+	pyublas::numpy_vector<double> data(_impl->pre().size() * _impl->post().size() * 4);
+
+	for(size_t i=0; i<_impl->pre().size(); i++)
+	{
+		for(size_t j=0; j<_impl->post().size(); j++)
+		{
+			size_t pre_offset = 4 * _impl->post().size() * i;
+			size_t post_offset = 4 * j;
+			data[pre_offset + post_offset]     = i;
+			data[pre_offset + post_offset + 1] = j;
+			data[pre_offset + post_offset + 2] = _impl->getRawWeights()(i, j);
+			data[pre_offset + post_offset + 3] = _impl->getRawDelays()(i, j);
+		}
+	}
+
+	const long shape[2] = {-1, 4};
+	data.reshape(2, shape);
+	return data;
+}
+
 /// Set parameters of the dynamic synapses for all connections in this
 /// projection.
 void PyProjection::setSynapseDynamics(std::string param, bp::object value)

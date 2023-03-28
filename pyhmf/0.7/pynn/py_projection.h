@@ -96,6 +96,9 @@ public:
 	/// FromFileConnector.
 	void saveConnections(bp::object file, bool gather = true, bool compatible_output = true);
 
+	/// Get connection matrix
+	pyublas::numpy_vector<double> getConnections();
+
 	/// d can be a single number, in which case all delays are set to this
 	/// value, or a list/1D array of length equal to the number of connections
 	/// in the projection, or a 2D array with the same dimensions as the
